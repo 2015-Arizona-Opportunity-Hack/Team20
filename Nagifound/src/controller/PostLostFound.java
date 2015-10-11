@@ -4,10 +4,7 @@ import java.io.File;
 import java.io.InputStream;
 import java.io.PrintWriter;
 import java.io.StringWriter;
-
 import javax.ws.rs.Consumes;
-import javax.ws.rs.FormParam;
-import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
@@ -28,10 +25,8 @@ import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3Client;
 import com.amazonaws.services.s3.model.CannedAccessControlList;
 import com.amazonaws.services.s3.model.PutObjectRequest;
-import com.sun.jersey.core.header.FormDataContentDisposition;
 import com.sun.jersey.multipart.FormDataBodyPart;
 import com.sun.jersey.multipart.FormDataMultiPart;
-import com.sun.jersey.multipart.FormDataParam;
 
 @Path("/postlostfound")
 public class PostLostFound {
@@ -64,10 +59,13 @@ public class PostLostFound {
 			String fileName = n.getValue();
 			FormDataBodyPart p = formData.getField("fileObject");
 			int fileAttached=0;
-			if(!((fileName.equals(null))||(p==null)||(p.equals(""))||(fileName.equals("dummy"))))
+			if((fileName==null)||(p==null)||(fileName.equals(""))||(fileName.equals("dummy")))
+			{
+				
+			}
+			else
 			{
 			InputStream fileStream = p.getValueAs(InputStream.class);
-			String mimeType = p.getMediaType().toString();
 			File targetFile=new File(fileName);
             FileUtils.copyInputStreamToFile(fileStream,targetFile);
             
@@ -79,7 +77,6 @@ public class PostLostFound {
             por.setCannedAcl(CannedAccessControlList.PublicRead);
             s3client.putObject(por);
             fileAttached=1;
-            
 			}
             
             String issueType=formData.getField("issueType").getValue();
@@ -91,7 +88,7 @@ public class PostLostFound {
             if(fileAttached==1)
             {animal.setImage("https://s3.amazonaws.com/nagifoundation/"+fileName);}
             animal.setType(animalType);
-            animal.setFeatures(sex+","+color+","+breed+","+height+","+collared+","+tagged);
+            animal.setFeatures("sex: "+sex+", color: "+color+", breed: "+breed+", height: "+height+", collared: "+collared+", tagged: "+tagged);
             animal.setPrimary_key(Integer.parseInt(time));
             mapper.save(animal);
             

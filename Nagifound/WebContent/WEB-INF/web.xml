@@ -10,12 +10,22 @@
     <welcome-file>default.jsp</welcome-file>
   </welcome-file-list>
   <servlet>
-		<servlet-name>Jersey Web Application</servlet-name>
-		<servlet-class>com.sun.jersey.spi.container.servlet.ServletContainer</servlet-class>
-		<load-on-startup>1</load-on-startup>
-	</servlet>
-	<servlet-mapping>
-		<servlet-name>Jersey Web Application</servlet-name>
-		<url-pattern>/nagi/*</url-pattern>
-	</servlet-mapping>
+    <servlet-name>Jersey Web Application</servlet-name>
+    <servlet-class>com.sun.jersey.spi.container.servlet.ServletContainer</servlet-class>
+    <load-on-startup>1</load-on-startup>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>Jersey Web Application</servlet-name>
+    <url-pattern>/nagi/*</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>LostServlet</display-name>
+    <servlet-name>LostServlet</servlet-name>
+    <servlet-class>controller.LostServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>LostServlet</servlet-name>
+    <url-pattern>/LostServlet</url-pattern>
+  </servlet-mapping>
 </web-app>
