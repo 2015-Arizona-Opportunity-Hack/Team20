@@ -23,8 +23,8 @@ import java.util.List;
         public String boundary;
         public HttpURLConnection connection;
         public StringBuilder sb;
-        private final List<FilePart> fileParts = new ArrayList<>();
-        private final List<StringPart> stringParts = new ArrayList<>();
+        private final List<FilePart> fileParts = new ArrayList<FilePart>();
+        private final List<StringPart> stringParts = new ArrayList<StringPart>();
 
         public MultipartHelper(HttpURLConnection connection) throws IOException {
             this(connection, "multipart/form-data");

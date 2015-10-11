@@ -15,13 +15,12 @@ var tbl=$("<table/>").attr("id","mytable");
         var td1="<td>"+obj[i]["firstName"]+"</td>";
         var td2="<td>"+obj[i]["lastName"]+"</td>";
         var td3="<td>"+obj[i]["phoneNumber"]+"</td>";
-        var td3="<td>"+obj[i]["email"]+"</td>;
-        var td3="<td>"+obj[i]["phoneNumber"]+"</td>;
-        var td3="<td>"+obj[i]["phoneNumber"]+"</td>;
-        var td3="<td>"+obj[i]["phoneNumber"]+"</td>;
-        var td3="<td>"+obj[i]["phoneNumber"]+"</td>;
-        var td3="<td>"+obj[i]["phoneNumber"]+"</td>;
-        </tr>";
+        var td4="<td>"+obj[i]["color"]+"</td>";
+        var td5="<td>"+obj[i]["sex"]+"</td>";
+        var td6="<td>"+obj[i]["location"]+"</td>";
+        var td7="<td>"+obj[i]["features"]+"</td>";
+        var td8="<td>"+obj[i]["image"]+"</td>";
+        var td9="<td>"+obj[i]["details"]+"</td></tr>";
 
        $("#mytable").append(tr+td1+td2+td3); 
 

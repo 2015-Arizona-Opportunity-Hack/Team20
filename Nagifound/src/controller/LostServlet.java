@@ -1,5 +1,10 @@
 package controller;
 
+import org.apache.commons.fileupload.FileItem;
+import org.apache.commons.fileupload.disk.DiskFileItemFactory;
+import org.apache.commons.fileupload.servlet.ServletFileUpload;
+import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.FilenameUtils;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -20,8 +25,6 @@ import java.util.List;
 
 import javax.jws.WebService;
 import javax.servlet.ServletException;
-
-import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -29,7 +32,6 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * Servlet implementation class LostServlet
  */
-@WebServlet("/AddProduct")
 public class LostServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	//Uri selectedImage;
@@ -79,7 +81,72 @@ public class LostServlet extends HttpServlet {
          phone = "123123";
          other = "dasd";
          issueType = "lost";
-
+         
+         List<FileItem> items = new ServletFileUpload(new DiskFileItemFactory()).parseRequest(request);
+         for (FileItem item : items) {
+	            if (item.isFormField()) {
+	                // Process regular form field (input type="text|radio|checkbox|etc", select, etc).
+	                String fieldName = item.getFieldName();
+	                String fieldValue = item.getString();
+	                // ... (do your job here)
+	                if(fieldName.equals("firstName"))
+	                {
+	                	firstName=fieldValue;
+	                }
+	                if(fieldName.equals("lastName"))
+	                {
+	                	lastName=fieldValue;
+	                }
+	                if(fieldName.equals("email"))
+	                {
+	                	email=fieldValue;
+	                }
+	                if(fieldName.equals("location"))
+	                {
+	                	location=fieldValue;
+	                }
+	                if(fieldName.equals("phone"))
+	                {
+	                	phone=fieldValue;
+	                }
+	                if(fieldName.equals("sex"))
+	                {
+	                	sex=fieldValue;
+	                }
+	                if(fieldName.equals("color"))
+	                {
+	                	color=fieldValue;
+	                }
+	                if(fieldName.equals("breed"))
+	                {
+	                	breed=fieldValue;
+	                }
+	                if(fieldName.equals("other"))
+	                {
+	                	other=fieldValue;
+	                }
+	                if(fieldName.equals("issueType"))
+	                {
+	                	issueType=fieldValue;
+	                }
+	                
+	            } else {
+	                // Process form file field (input type="file").
+	                String fieldName = item.getFieldName();
+	                String fileName = FilenameUtils.getName(item.getName());
+	                InputStream fileContent = item.getInputStream();
+	                /*byte buffer[]=new byte[fileContent.available()];
+	                fileContent.read(buffer);
+	                File targetFile = new File("fileName");
+	                OutputStream outStream = new FileOutputStream(targetFile);
+	                outStream.write(buffer);*/
+	                File targetFile = new File(fileName);
+	                FileUtils.copyInputStreamToFile(fileContent,targetFile);
+	                
+	                
+	            
+	            }
+         }
          String urlStr = "http://nagifound-pcqzft2why.elasticbeanstalk.com/nagi/postlostfound";
          URL url = new URL(urlStr);
          HttpURLConnection connection = (HttpURLConnection) url.openConnection();
